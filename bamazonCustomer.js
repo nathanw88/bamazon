@@ -148,7 +148,6 @@ function cart(id, quantity){
       case "Yes, please":
       console.group(`Thanks for buying ${quantity} ${product.name}`)
       updateStock(id, -quantity)
-      readProducts
       break;
 
       case "No, thanks":
@@ -178,7 +177,7 @@ function updateStock(itemid, quantity){
     function(err, res) {
      
     
-
+readProducts()
      
     }
   )
