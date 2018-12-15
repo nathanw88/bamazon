@@ -15,24 +15,20 @@ var connection = mysql.createConnection({
   password: "root",
   database: "bamazon_db"
 });
-// running this will display all the items for sale including  
-//id
-//name
-//price
+
 connection.connect(function(err) {
   if (err) throw err;
   console.log("connected as id " + connection.threadId + "\n");
   readProducts();
 });
 
-
+// running this will display all the items for sale
 function readProducts() {
   console.log("Selecting all products...\n");
   connection.query("SELECT * FROM products", function(err, res) {
     if (err) throw err;
-    // Log all results of the SELECT statement
     console.table(res);
-
+  //function for picking what you want to buy.
     function whatToBuy() {
 
       inquirer.prompt([
@@ -69,14 +65,14 @@ function readProducts() {
     }
     
     whatToBuy()
+  
     
   });
+  
 }
 
-//prompt user for id of item they want to buy
 
-// prompt user for how many items they would like to buy
-
+//function for prompting user for how many items they would like to buy
 function quantityToBuy(id){
   inquirer.prompt([
     {
@@ -128,11 +124,7 @@ function quantityToBuy(id){
 
 }
 
-
-
-
-//else if there is enough stock tell them the total price, prompt a confirm purchase
-
+//cart tells customers total price and confirms purchase
 function cart(id, quantity){
   var total = (product.price * quantity)
   inquirer.prompt([
@@ -146,7 +138,7 @@ function cart(id, quantity){
     switch (res.userChoice){
 
       case "Yes, please":
-      console.group(`Thanks for buying ${quantity} ${product.name}`)
+      console.group(`Thanks for buying ${quantity} ${product.product_name}`)
       updateStock(id, -quantity)
       break;
 
@@ -161,23 +153,17 @@ function cart(id, quantity){
   })
 
 }
-
+//function for updating stock after customer confirms purchase
 function updateStock(itemid, quantity){
- var amount = product.stock += quantity
-  var query = connection.query(
-    "UPDATE products SET ? WHERE ?",
+  connection.query(`UPDATE products SET stock = stock + ${quantity} WHERE ?`,
     [
-      {
-        stock: amount
-      },
       {
         id: itemid
       }
-    ],
-    function(err, res) {
+    ],function(err, res) {
      
     
-readProducts()
+    readProducts()
      
     }
   )
@@ -188,22 +174,6 @@ readProducts()
 
 
 
-// update the stock amount 
 
-//manager view 
 
-// menu options to show 
 
-//  products for sale
-// select * from table
-
-// view low inventory
-//select * from table where stock < 5
-
-// add to inventory
-// update stock from table where id: selector
-
-//add to table new product
-// insert into table new product
-
-//
