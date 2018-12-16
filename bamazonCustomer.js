@@ -139,7 +139,7 @@ function cart(id, quantity){
 
       case "Yes, please":
       console.group(`Thanks for buying ${quantity} ${product.product_name}`)
-      updateStock(id, -quantity)
+      updateStock(id, -quantity, total)
       break;
 
       case "No, thanks":
@@ -154,8 +154,8 @@ function cart(id, quantity){
 
 }
 //function for updating stock after customer confirms purchase
-function updateStock(itemid, quantity){
-  connection.query(`UPDATE products SET stock = stock + ${quantity} WHERE ?`,
+function updateStock(itemid, quantity, total){
+  connection.query(`UPDATE products SET stock = stock + ${quantity}, product_sales = product_sales + ${total} WHERE ?`,
     [
       {
         id: itemid

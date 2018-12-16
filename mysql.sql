@@ -26,3 +26,6 @@ INSERT INTO products (product_name, department_name, price, stock)
     ("Shirt", "Clothing", 10.99, 0),
     ("Snowboard", "Sports", 186.99, 11),
     ("Blender", "Kitchen", 118.99, 17);
+
+    
+    ALTER TABLE products ADD product_sales decimal(55, 2) DEFAULT 0; 
